@@ -9,8 +9,6 @@
 # Michał Lech - preventing rake namespace1:namespace1:task1 issue, Rubyisms,
 #               removing args
 
-
-
 exit 0 unless File.file?(File.join(Dir.pwd, 'Rakefile'))
 exit 0 unless /^rake\b/ =~ ENV["COMP_LINE"]
 after_match = $'
@@ -28,4 +26,4 @@ if task_match =~ /^([-\w:]+:)/
     tasks.map! { |t| t.split(':')[colons..-1].join(':') }
 end
 puts tasks
-exit 0 
+exit 0
