@@ -1,0 +1,61 @@
+#!/bin/bash
+
+confs="$HOME/.kube"
+varstore="$confs/k8s_wrapper_state"
+spacetore="$varstore/namespace"
+clustore="$varstore/cluster"
+
+set_default() {
+    set -e
+    echo "Setting $1 to $2 in $3"
+    echo "$2" > "$3"
+    set +e
+}
+
+[ -d "$varstore" ]  || mkdir -p "$varstore" || exit 1
+[ -f "$spacetore" ] || set_default namespace olive "$spacetore"
+[ -f "$clustore" ]  || set_default cluster   dev   "$clustore"
+
+dummyRun=''
+case $1 in
+    -n) shift
+        set_default namespace "$1" "$spacetore"
+        exit
+        ;;
+    -c) shift
+        set_default cluster "$1" "$clustore"
+        exit
+        ;;
+    -d) export dummyRun=yes;;
+    -s) shift
+        export shellIt=yes
+        ;;
+    -x) shift
+        export execIt=yes
+        export pod=$1
+        shift
+        ;;
+esac
+
+namespace=`< $spacetore`
+cluster=`< $clustore`
+
+kube_it() {
+    kubectl --kubeconfig $HOME/.kube/kubeconfig/$cluster \
+            -n $namespace "$@"
+    exit
+}
+
+echo "cluster:   $cluster
+namespace: $namespace
+"
+
+[ "$dummyRun" = 'yes' ] && exit
+
+[ "$shellIt" ] && kube_it exec -it $1 -- sh
+
+[ "$execIt" ] && kube_it exec -it $pod -- "$@"
+
+[ "$1" ] &&
+	kube_it "$@" ||
+	kube_it get pods
