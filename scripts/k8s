@@ -20,10 +20,13 @@ dummyRun=''
 case $1 in
     -n) shift
         set_default namespace "$1" "$spacetore"
+        kubectl config set-context --current --namespace="$1"
         exit
         ;;
     -c) shift
         set_default cluster "$1" "$clustore"
+        rm $HOME/.kube/config
+        ln -fs $HOME/.kube/kubeconfig/$1 $HOME/.kube/config
         exit
         ;;
     -d) export dummyRun=yes;;
