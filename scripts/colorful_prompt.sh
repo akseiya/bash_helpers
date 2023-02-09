@@ -10,7 +10,7 @@ function makeps()
 {
     creset="\[\033[0m\]"
     cuser=`colours.js yellow p`
-    chost=`colours.js purple p`
+    chost=`colours.js purple h p`
     cpwd=`colours.js cyan p`
     cgit=`colours.js green p`
     cruby=`colours.js red h p`
