@@ -15,8 +15,10 @@ function makeps()
     cgit=`colours.js green p`
     cruby=`colours.js red h p`
 
-    echo -n " ${cruby}∇ \$(___ruby_v) "
-    echo "$cpwd⬡ \$(node -v)${creset} 🐍 ${cgit}\$(___python_v)$creset"
+    [ -a $HOME/SLOW_MULE ] || {
+        echo -n " ${cruby}∇ \$(___ruby_v) "
+        echo "$cpwd⬡ \$(node -v)${creset} 🐍 ${cgit}\$(___python_v)$creset"
+    }
     echo -n "[$cgit\$(git rev-parse --abbrev-ref HEAD 2> /dev/null || echo NO REPO)$creset]"
     echo " : $cpwd\$(pwd)$creset"
     echo " $cuser\u$creset @ $chost\h$creset > "
