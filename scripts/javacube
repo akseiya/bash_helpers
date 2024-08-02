@@ -1,5 +1,0 @@
-#!/bin/bash
-pgrep -f '[j]ava.*((cube)|(play2))' | xargs sudo kill -9
-cd src/java
-mvn clean install -DskipTests
-rake workers:install
