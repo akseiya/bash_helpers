@@ -4,4 +4,5 @@ sudo grep -q $USER /etc/sudoers && {
     sudo grep $USER /etc/sudoers
     exit 1
 }
-echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers
+echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/$USER
+sudo chmod 440 /etc/sudoers.d/$USER
