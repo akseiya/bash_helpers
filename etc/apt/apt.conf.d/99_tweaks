@@ -1,0 +1,7 @@
+APT {
+    Get {
+        Assume-Yes "true";
+        Fix-Broken "true";
+    }
+}
+quiet "true";
